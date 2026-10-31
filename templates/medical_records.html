@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medical Records - HMS</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: #0d6efd;
+            color: white;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            color: white;
+            text-decoration: none;
+            font-size: 21px;
+            font-weight: 700;
+            padding: 15px 20px 25px;
+            display: block;
+        }
+
+        .sidebar-brand:hover {
+            color: white;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            margin: 3px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.22);
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            background: white;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar-title {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-title {
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+        }
+
+        .page-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: #e7f1ff;
+            color: #0d6efd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .custom-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-input {
+            height: 45px;
+        }
+
+        .search-button {
+            height: 45px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .records-card {
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background: #f8fafc;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table tbody td {
+            padding: 15px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .record-id {
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .person-info {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .diagnosis-text,
+        .treatment-text {
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .date-badge {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .record-count {
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .details-button {
+            white-space: nowrap;
+        }
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty-state {
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main-content {
+                margin-left: 210px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .sidebar .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .sidebar .nav-link {
+                width: auto;
+            }
+
+            .table {
+                min-width: 950px;
+            }
+
+            .topbar-user {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==================== SIDEBAR ==================== -->
+
+    <aside class="sidebar">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="sidebar-brand"
+        >
+            <i class="bi bi-hospital me-2"></i>
+            HMS
+        </a>
+
+
+        <nav class="nav flex-column">
+
+
+            <!-- Dashboard -->
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- Patients -->
+            <a
+                href="{{ url_for('patient.patient_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-people"></i>
+                <span>Patients</span>
+            </a>
+
+
+            <!-- Doctors -->
+            <a
+                href="{{ url_for('doctor.doctor_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-person-badge"></i>
+                <span>Doctors</span>
+            </a>
+
+
+            <!-- Appointments -->
+            <a
+                href="{{ url_for('appointment.appointment_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-calendar-check"></i>
+                <span>Appointments</span>
+            </a>
+
+
+            <!-- Medical Records - ACTIVE -->
+            <a
+                href="{{ url_for('medical_record.medical_record_list') }}"
+                class="nav-link active"
+            >
+                <i class="bi bi-file-medical"></i>
+                <span>Medical Records</span>
+            </a>
+
+
+            <!-- Laboratory -->
+            <a
+                href="{{ url_for('laboratory.laboratory_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-eyedropper"></i>
+                <span>Laboratory</span>
+            </a>
+
+
+            <!-- Billing -->
+            <a
+                href="{{ url_for('billing.billing_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-receipt"></i>
+                <span>Billing</span>
+            </a>
+
+
+            <!-- Staff -->
+            <a
+                href="{{ url_for('staff.staff_list') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-person-workspace"></i>
+                <span>Staff</span>
+            </a>
+
+
+            <!-- Reports -->
+            <a
+                href="{{ url_for('reports.reports_dashboard') }}"
+                class="nav-link"
+            >
+                <i class="bi bi-bar-chart"></i>
+                <span>Reports</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==================== TOPBAR ==================== -->
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="topbar-title">
+                    Medical Records
+                </div>
+
+                <small class="text-muted">
+                    Patient diagnosis, treatment and medical history
+                </small>
+
+            </div>
+
+
+            <div class="topbar-user d-flex align-items-center gap-3">
+
+                <div class="text-end">
+
+                    <div class="fw-semibold">
+                        {{ current_user.username }}
+                    </div>
+
+                    <small class="text-muted">
+                        {{ current_user.role|capitalize }}
+                    </small>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="btn btn-outline-danger btn-sm"
+                >
+                    <i class="bi bi-box-arrow-right"></i>
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================== PAGE CONTENT ==================== -->
+
+        <div class="page-content">
+
+
+            <!-- ==================== PAGE HEADER ==================== -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="page-icon">
+                        <i class="bi bi-file-medical"></i>
+                    </div>
+
+
+                    <div>
+
+                        <h2 class="page-title mb-1">
+                            Medical Records
+                        </h2>
+
+                        <p class="page-subtitle mb-0">
+                            Manage patient diagnosis, treatment and medical history
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="{{ url_for('medical_record.add_medical_record') }}"
+                    class="btn btn-primary"
+                >
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Add Medical Record
+                </a>
+
+            </div>
+
+
+            <!-- ==================== FLASH MESSAGES ==================== -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert alert-{{ category }} alert-dismissible fade show shadow-sm"
+                            role="alert"
+                        >
+
+                            {{ message }}
+
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                            ></button>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- ==================== SEARCH CARD ==================== -->
+
+            <div class="card custom-card mb-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <i class="bi bi-search text-primary fs-5 me-2"></i>
+
+                        <h6 class="fw-bold mb-0">
+                            Search Medical Records
+                        </h6>
+
+                    </div>
+
+
+                    <form
+                        method="GET"
+                        action="{{ url_for('medical_record.medical_record_list') }}"
+                    >
+
+                        <div class="row g-2">
+
+                            <div class="col-md-9">
+
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control search-input"
+                                    placeholder="Search by patient, doctor or diagnosis..."
+                                    value="{{ search }}"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-3 d-flex gap-2">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary search-button w-100"
+                                >
+                                    <i class="bi bi-search me-1"></i>
+                                    Search
+                                </button>
+
+
+                                {% if search %}
+
+                                    <a
+                                        href="{{ url_for('medical_record.medical_record_list') }}"
+                                        class="btn btn-outline-secondary search-button"
+                                    >
+                                        <i class="bi bi-x-lg"></i>
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================== SEARCH RESULT INFO ==================== -->
+
+            {% if search %}
+
+                <div class="mb-3">
+
+                    <span class="text-muted">
+                        Search results for:
+                    </span>
+
+                    <strong>
+                        "{{ search }}"
+                    </strong>
+
+                    <span class="record-count ms-2">
+                        {{ records|length }} record(s) found
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ==================== RECORDS CARD ==================== -->
+
+            <div class="card custom-card records-card">
+
+                <div class="card-body p-0">
+
+                    {% if records %}
+
+
+                        <!-- RECORD HEADER -->
+
+                        <div class="d-flex justify-content-between align-items-center p-4">
+
+                            <div>
+
+                                <h5 class="fw-bold mb-1">
+                                    Medical Record List
+                                </h5>
+
+                                <small class="text-muted">
+                                    Patient medical history and treatment records
+                                </small>
+
+                            </div>
+
+
+                            <span class="record-count">
+                                {{ records|length }} Records
+                            </span>
+
+                        </div>
+
+
+                        <!-- ==================== TABLE ==================== -->
+
+                        <div class="table-responsive">
+
+                            <table class="table table-hover align-middle mb-0">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Record ID
+                                        </th>
+
+                                        <th>
+                                            Patient
+                                        </th>
+
+                                        <th>
+                                            Doctor
+                                        </th>
+
+                                        <th>
+                                            Diagnosis
+                                        </th>
+
+                                        <th>
+                                            Treatment
+                                        </th>
+
+                                        <th>
+                                            Created
+                                        </th>
+
+                                        <th>
+                                            Action
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% for record in records %}
+
+                                        <tr>
+
+
+                                            <!-- Record ID -->
+
+                                            <td>
+
+                                                <span class="record-id">
+                                                    #{{ record.id }}
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- Patient -->
+
+                                            <td>
+
+                                                <span class="person-info">
+
+                                                    <i class="bi bi-person-circle text-primary me-1"></i>
+
+                                                    Patient #{{ record.patient_id }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- Doctor -->
+
+                                            <td>
+
+                                                <span class="person-info">
+
+                                                    <i class="bi bi-person-badge text-success me-1"></i>
+
+                                                    Doctor #{{ record.doctor_id }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- Diagnosis -->
+
+                                            <td>
+
+                                                {% if record.diagnosis %}
+
+                                                    <div
+                                                        class="diagnosis-text"
+                                                        title="{{ record.diagnosis }}"
+                                                    >
+                                                        {{ record.diagnosis }}
+                                                    </div>
+
+                                                {% else %}
+
+                                                    <span class="text-muted">
+                                                        N/A
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+
+                                            <!-- Treatment -->
+
+                                            <td>
+
+                                                {% if record.treatment %}
+
+                                                    <div
+                                                        class="treatment-text"
+                                                        title="{{ record.treatment }}"
+                                                    >
+                                                        {{ record.treatment }}
+                                                    </div>
+
+                                                {% else %}
+
+                                                    <span class="text-muted">
+                                                        N/A
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+
+                                            <!-- Created -->
+
+                                            <td>
+
+                                                <span class="date-badge">
+
+                                                    <i class="bi bi-calendar3 me-1"></i>
+
+                                                    {{ record.created_at.strftime("%d-%m-%Y") }}
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <!-- Action -->
+
+                                            <td>
+
+                                                <a
+                                                    href="{{ url_for('medical_record.medical_record_details', record_id=record.id) }}"
+                                                    class="btn btn-sm btn-outline-primary details-button"
+                                                >
+
+                                                    <i class="bi bi-eye me-1"></i>
+
+                                                    View Details
+
+                                                </a>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <!-- ==================== EMPTY STATE ==================== -->
+
+                        <div class="empty-state text-center">
+
+                            <div class="empty-icon">
+
+                                <i class="bi bi-file-medical"></i>
+
+                            </div>
+
+
+                            {% if search %}
+
+                                <h5 class="fw-bold">
+                                    No Medical Records Found
+                                </h5>
+
+                                <p class="text-muted">
+                                    Try searching with a different patient,
+                                    doctor or diagnosis.
+                                </p>
+
+                                <a
+                                    href="{{ url_for('medical_record.medical_record_list') }}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                    Clear Search
+                                </a>
+
+
+                            {% else %}
+
+                                <h5 class="fw-bold">
+                                    No Medical Records Available
+                                </h5>
+
+                                <p class="text-muted">
+                                    Click "Add Medical Record" to create the first record.
+                                </p>
+
+                                <a
+                                    href="{{ url_for('medical_record.add_medical_record') }}"
+                                    class="btn btn-primary"
+                                >
+                                    <i class="bi bi-plus-circle me-1"></i>
+                                    Add Medical Record
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Bootstrap JavaScript -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+</body>
+
+</html>

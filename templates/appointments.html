@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Appointments - HMS</title>
+
+
+    <!-- ================================================= -->
+    <!-- BOOTSTRAP CSS -->
+    <!-- ================================================= -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- ================================================= -->
+    <!-- BOOTSTRAP ICONS -->
+    <!-- ================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- ================================================= -->
+    <!-- CUSTOM CSS -->
+    <!-- ================================================= -->
+
+    <style>
+
+        /* ================= BODY ================= */
+
+        body {
+
+            background-color: #f4f7fb;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+
+            min-height: 100vh;
+
+            background: #0d6efd;
+
+            color: white;
+
+            position: fixed;
+
+            width: 250px;
+
+            left: 0;
+
+            top: 0;
+
+            padding: 25px 15px;
+
+            z-index: 1000;
+
+        }
+
+
+        /* ================= HOSPITAL LOGO ================= */
+
+        .hospital-logo {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .hospital-logo i {
+
+            font-size: 42px;
+
+        }
+
+
+        .hospital-logo h4 {
+
+            margin-top: 10px;
+
+            font-weight: 600;
+
+        }
+
+
+        .hospital-logo small {
+
+            opacity: 0.9;
+
+        }
+
+
+        /* ================= SIDEBAR MENU ================= */
+
+        .sidebar-menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 15px;
+
+            margin-bottom: 6px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .sidebar-menu a:hover {
+
+            background: rgba(255, 255, 255, 0.15);
+
+        }
+
+
+        .sidebar-menu i {
+
+            font-size: 18px;
+
+            width: 22px;
+
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+
+            margin-left: 250px;
+
+            padding: 25px;
+
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 15px 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .welcome-text {
+
+            font-size: 14px;
+
+            color: #6c757d;
+
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .page-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 12px;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+        }
+
+
+        /* ================= SEARCH CARD ================= */
+
+        .search-card {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .search-label {
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .search-input {
+
+            height: 45px;
+
+        }
+
+
+        /* ================= TABLE CARD ================= */
+
+        .table-card {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .table-header {
+
+            padding: 18px 20px;
+
+            border-bottom: 1px solid #e9ecef;
+
+        }
+
+
+        .table-responsive {
+
+            overflow-x: auto;
+
+        }
+
+
+        .appointment-table {
+
+            margin-bottom: 0;
+
+            min-width: 1050px;
+
+        }
+
+
+        .appointment-table thead th {
+
+            background: #f1f6ff;
+
+            color: #495057;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.3px;
+
+            padding: 14px 12px;
+
+            white-space: nowrap;
+
+            border-bottom: 1px solid #dee2e6;
+
+        }
+
+
+        .appointment-table tbody td {
+
+            padding: 14px 12px;
+
+            vertical-align: middle;
+
+            font-size: 14px;
+
+        }
+
+
+        .appointment-table tbody tr {
+
+            transition: 0.15s;
+
+        }
+
+
+        .appointment-table tbody tr:hover {
+
+            background-color: #f8fbff;
+
+        }
+
+
+        /* ================= ID ================= */
+
+        .appointment-id {
+
+            color: #6c757d;
+
+            font-weight: 500;
+
+        }
+
+
+        /* ================= PATIENT / DOCTOR ================= */
+
+        .person-cell {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            white-space: nowrap;
+
+        }
+
+
+        .person-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 50%;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 15px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .doctor-icon {
+
+            background: #e8f7ee;
+
+            color: #198754;
+
+        }
+
+
+        .person-id {
+
+            font-weight: 600;
+
+        }
+
+
+        /* ================= DATE ================= */
+
+        .date-badge {
+
+            display: inline-block;
+
+            background: #eef2f7;
+
+            color: #495057;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ================= TIME ================= */
+
+        .time-badge {
+
+            display: inline-block;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ================= REASON ================= */
+
+        .reason-text {
+
+            max-width: 220px;
+
+            color: #495057;
+
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        .status-scheduled {
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+        }
+
+
+        .status-completed {
+
+            background: #e8f7ee;
+
+            color: #198754;
+
+        }
+
+
+        .status-cancelled {
+
+            background: #fff1f2;
+
+            color: #dc3545;
+
+        }
+
+
+        .status-default {
+
+            background: #f1f3f5;
+
+            color: #6c757d;
+
+        }
+
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+        }
+
+
+        .empty-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            border-radius: 50%;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+
+            margin: 0 auto 20px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                min-height: auto;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 15px;
+
+            }
+
+
+            .sidebar-menu {
+
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+
+            .sidebar-menu a {
+
+                margin: 3px;
+
+            }
+
+
+            .page-header {
+
+                padding: 18px;
+
+            }
+
+
+            .page-header-content {
+
+                flex-direction: column;
+
+                align-items: flex-start !important;
+
+                gap: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- SIDEBAR -->
+<!-- ===================================================== -->
+
+<div class="sidebar">
+
+
+    <!-- Hospital Logo -->
+
+    <div class="hospital-logo">
+
+        <i class="bi bi-hospital"></i>
+
+        <h4>HMS</h4>
+
+        <small>Hospital Management</small>
+
+    </div>
+
+
+    <!-- Sidebar Menu -->
+
+    <div class="sidebar-menu">
+
+
+        <!-- Dashboard -->
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="bi bi-speedometer2"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <!-- Patients -->
+
+        <a href="{{ url_for('patient.patient_list') }}">
+
+            <i class="bi bi-person-vcard"></i>
+
+            <span>Patients</span>
+
+        </a>
+
+
+        <!-- Doctors -->
+
+        <a href="{{ url_for('doctor.doctor_list') }}">
+
+            <i class="bi bi-person-badge"></i>
+
+            <span>Doctors</span>
+
+        </a>
+
+
+        <!-- Appointments -->
+
+        <a href="{{ url_for('appointment.appointment_list') }}">
+
+            <i class="bi bi-calendar-check"></i>
+
+            <span>Appointments</span>
+
+        </a>
+
+
+        <!-- Medical Records -->
+
+        <a href="{{ url_for('medical_record.medical_record_list') }}">
+
+            <i class="bi bi-file-medical"></i>
+
+            <span>Medical Records</span>
+
+        </a>
+
+
+        <!-- Laboratory -->
+
+        <a href="{{ url_for('laboratory.laboratory_list') }}">
+
+            <i class="bi bi-eyedropper"></i>
+
+            <span>Laboratory</span>
+
+        </a>
+
+
+        <!-- Billing -->
+
+        <a href="{{ url_for('billing.billing_list') }}">
+
+            <i class="bi bi-receipt"></i>
+
+            <span>Billing</span>
+
+        </a>
+
+
+        <!-- Staff -->
+
+        <a href="{{ url_for('staff.staff_list') }}">
+
+            <i class="bi bi-people"></i>
+
+            <span>Staff</span>
+
+        </a>
+
+
+        <!-- Reports -->
+
+        <a href="{{ url_for('reports.reports_dashboard') }}">
+
+            <i class="bi bi-bar-chart"></i>
+
+            <span>Reports</span>
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- MAIN CONTENT -->
+<!-- ===================================================== -->
+
+<div class="main-content">
+
+
+    <!-- ================================================= -->
+    <!-- TOP BAR -->
+    <!-- ================================================= -->
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+
+
+        <div>
+
+            <h5 class="mb-1">
+
+                Appointment Management
+
+            </h5>
+
+
+            <div class="welcome-text">
+
+                Welcome back, {{ current_user.username }}
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="btn btn-outline-danger btn-sm"
+            >
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- PAGE HEADER -->
+    <!-- ================================================= -->
+
+    <div class="page-header">
+
+
+        <div
+            class="page-header-content d-flex justify-content-between align-items-center"
+        >
+
+
+            <div class="d-flex align-items-center gap-3">
+
+
+                <div class="page-icon">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2 class="fw-bold mb-1">
+
+                        Appointments
+
+                    </h2>
+
+
+                    <p class="text-muted mb-0">
+
+                        Manage patient appointments and schedules
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div>
+
+                <a
+                    href="{{ url_for('appointment.add_appointment') }}"
+                    class="btn btn-primary"
+                >
+
+                    <i class="bi bi-calendar-plus"></i>
+
+                    Schedule Appointment
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- FLASH MESSAGES -->
+    <!-- ================================================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+
+        {% if messages %}
+
+
+            {% for category, message in messages %}
+
+
+                <div
+                    class="alert alert-{{ category }} alert-dismissible fade show"
+                    role="alert"
+                >
+
+                    <i class="bi bi-info-circle me-2"></i>
+
+                    {{ message }}
+
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% endif %}
+
+
+    {% endwith %}
+
+
+
+    <!-- ================================================= -->
+    <!-- SEARCH -->
+    <!-- ================================================= -->
+
+    <div class="search-card">
+
+
+        <form
+            method="GET"
+            action="{{ url_for('appointment.appointment_list') }}"
+        >
+
+
+            <div class="row g-3 align-items-end">
+
+
+                <div class="col-lg-9 col-md-8">
+
+
+                    <div class="search-label">
+
+                        <i class="bi bi-search me-1"></i>
+
+                        Search Appointments
+
+                    </div>
+
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control search-input"
+                        placeholder="Search by patient name, doctor name or status..."
+                        value="{{ search or '' }}"
+                    >
+
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-4">
+
+
+                    <div class="d-flex gap-2">
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary search-input flex-fill"
+                        >
+
+                            <i class="bi bi-search"></i>
+
+                            Search
+
+                        </button>
+
+
+                        {% if search %}
+
+
+                            <a
+                                href="{{ url_for('appointment.appointment_list') }}"
+                                class="btn btn-outline-secondary search-input"
+                            >
+
+                                <i class="bi bi-x-circle"></i>
+
+                                Clear
+
+                            </a>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- APPOINTMENT TABLE -->
+    <!-- ================================================= -->
+
+    <div class="table-card">
+
+
+        <!-- Table Header -->
+
+        <div class="table-header">
+
+
+            <div class="d-flex justify-content-between align-items-center">
+
+
+                <div>
+
+
+                    <h5 class="mb-1">
+
+                        Appointment Records
+
+                    </h5>
+
+
+                    {% if search %}
+
+
+                        <small class="text-muted">
+
+                            Search results for:
+
+                            <strong>
+
+                                "{{ search }}"
+
+                            </strong>
+
+                        </small>
+
+
+                    {% else %}
+
+
+                        <small class="text-muted">
+
+                            Scheduled appointments in the hospital system
+
+                        </small>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+                {% if appointments %}
+
+
+                    <span class="badge bg-primary rounded-pill">
+
+                        {{ appointments|length }}
+                        Appointment{% if appointments|length != 1 %}s{% endif %}
+
+                    </span>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- APPOINTMENT DATA -->
+        <!-- ================================================= -->
+
+        {% if appointments %}
+
+
+            <div class="table-responsive">
+
+
+                <table class="table appointment-table align-middle">
+
+
+                    <thead>
+
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Doctor
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Reason
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th class="text-center">
+                                Action
+                            </th>
+
+                        </tr>
+
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for appointment in appointments %}
+
+
+                            <tr>
+
+
+                                <!-- ID -->
+
+                                <td>
+
+                                    <span class="appointment-id">
+
+                                        #{{ appointment.id }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- PATIENT -->
+
+                                <td>
+
+
+                                    <div class="person-cell">
+
+
+                                        <span class="person-icon">
+
+                                            <i class="bi bi-person"></i>
+
+                                        </span>
+
+
+                                        <span class="person-id">
+
+                                            Patient #{{ appointment.patient_id }}
+
+                                        </span>
+
+
+                                    </div>
+
+
+                                </td>
+
+
+                                <!-- DOCTOR -->
+
+                                <td>
+
+
+                                    <div class="person-cell">
+
+
+                                        <span class="person-icon doctor-icon">
+
+                                            <i class="bi bi-person-badge"></i>
+
+                                        </span>
+
+
+                                        <span class="person-id">
+
+                                            Doctor #{{ appointment.doctor_id }}
+
+                                        </span>
+
+
+                                    </div>
+
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+
+                                    <span class="date-badge">
+
+                                        <i class="bi bi-calendar3 me-1"></i>
+
+                                        {{ appointment.appointment_date.strftime("%d-%m-%Y") }}
+
+                                    </span>
+
+
+                                </td>
+
+
+                                <!-- TIME -->
+
+                                <td>
+
+
+                                    <span class="time-badge">
+
+                                        <i class="bi bi-clock me-1"></i>
+
+                                        {{ appointment.appointment_time.strftime("%I:%M %p") }}
+
+                                    </span>
+
+
+                                </td>
+
+
+                                <!-- REASON -->
+
+                                <td>
+
+
+                                    {% if appointment.reason %}
+
+
+                                        <span class="reason-text">
+
+                                            {{ appointment.reason }}
+
+                                        </span>
+
+
+                                    {% else %}
+
+
+                                        <span class="text-muted">
+
+                                            N/A
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+
+                                    {% if appointment.status == "Scheduled" %}
+
+
+                                        <span class="status-badge status-scheduled">
+
+                                            <i class="bi bi-clock"></i>
+
+                                            Scheduled
+
+                                        </span>
+
+
+                                    {% elif appointment.status == "Completed" %}
+
+
+                                        <span class="status-badge status-completed">
+
+                                            <i class="bi bi-check-circle"></i>
+
+                                            Completed
+
+                                        </span>
+
+
+                                    {% elif appointment.status == "Cancelled" %}
+
+
+                                        <span class="status-badge status-cancelled">
+
+                                            <i class="bi bi-x-circle"></i>
+
+                                            Cancelled
+
+                                        </span>
+
+
+                                    {% else %}
+
+
+                                        <span class="status-badge status-default">
+
+                                            <i class="bi bi-info-circle"></i>
+
+                                            {{ appointment.status }}
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                                <!-- ACTION -->
+
+                                <td class="text-center">
+
+
+                                    <a
+                                        href="{{ url_for('appointment.appointment_details', appointment_id=appointment.id) }}"
+                                        class="btn btn-sm btn-outline-primary"
+                                    >
+
+                                        <i class="bi bi-eye"></i>
+
+                                        View Details
+
+                                    </a>
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- ================================================= -->
+            <!-- EMPTY STATE -->
+            <!-- ================================================= -->
+
+            <div class="empty-state">
+
+
+                <div class="empty-icon">
+
+                    <i class="bi bi-calendar-x"></i>
+
+                </div>
+
+
+                {% if search %}
+
+
+                    <h5 class="text-muted">
+
+                        No appointments found
+
+                    </h5>
+
+
+                    <p class="text-muted">
+
+                        Try searching with a different patient name,
+                        doctor name or status.
+
+                    </p>
+
+
+                    <a
+                        href="{{ url_for('appointment.appointment_list') }}"
+                        class="btn btn-outline-primary"
+                    >
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+
+                        Clear Search
+
+                    </a>
+
+
+                {% else %}
+
+
+                    <h5 class="text-muted">
+
+                        No appointments scheduled yet
+
+                    </h5>
+
+
+                    <p class="text-muted">
+
+                        Schedule your first appointment to start
+                        managing hospital visits.
+
+                    </p>
+
+
+                    <a
+                        href="{{ url_for('appointment.add_appointment') }}"
+                        class="btn btn-primary"
+                    >
+
+                        <i class="bi bi-calendar-plus"></i>
+
+                        Schedule Appointment
+
+                    </a>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- BOOTSTRAP JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+</body>
+
+</html>

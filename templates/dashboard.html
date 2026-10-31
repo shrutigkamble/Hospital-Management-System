@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HMS Admin Dashboard</title>
+
+
+    <!-- ================================================= -->
+    <!-- BOOTSTRAP CSS -->
+    <!-- ================================================= -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- ================================================= -->
+    <!-- BOOTSTRAP ICONS -->
+    <!-- ================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- ================================================= -->
+    <!-- CHART.JS -->
+    <!-- ================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- ================================================= -->
+    <!-- CUSTOM CSS -->
+    <!-- ================================================= -->
+
+    <style>
+
+        /* ================= BODY ================= */
+
+        body {
+
+            background-color: #f4f7fb;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+
+            min-height: 100vh;
+
+            background: #0d6efd;
+
+            color: white;
+
+            position: fixed;
+
+            width: 250px;
+
+            left: 0;
+
+            top: 0;
+
+            padding: 25px 15px;
+
+            z-index: 1000;
+
+        }
+
+
+        .hospital-logo {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .hospital-logo i {
+
+            font-size: 42px;
+
+        }
+
+
+        .hospital-logo h4 {
+
+            margin-top: 10px;
+
+            font-weight: 600;
+
+        }
+
+
+        .hospital-logo small {
+
+            opacity: 0.9;
+
+        }
+
+
+        /* ================= SIDEBAR MENU ================= */
+
+        .sidebar-menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 15px;
+
+            margin-bottom: 6px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .sidebar-menu a:hover {
+
+            background: rgba(255, 255, 255, 0.15);
+
+        }
+
+
+        .sidebar-menu i {
+
+            font-size: 18px;
+
+            width: 22px;
+
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+
+            margin-left: 250px;
+
+            padding: 25px;
+
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 15px 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .welcome-text {
+
+            font-size: 14px;
+
+            color: #6c757d;
+
+        }
+
+
+        /* ================= STAT CARDS ================= */
+
+        .stat-card {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
+            transition: 0.2s;
+
+            height: 100%;
+
+        }
+
+
+        .stat-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .stat-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+        }
+
+
+        .stat-title {
+
+            color: #6c757d;
+
+            font-size: 14px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .stat-value {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            margin: 0;
+
+        }
+
+
+        /* ================= CHART CARDS ================= */
+
+        .chart-card {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+            height: 100%;
+
+        }
+
+
+        .chart-container {
+
+            position: relative;
+
+            height: 320px;
+
+        }
+
+
+        /* ================= MODULE CARDS ================= */
+
+        .module-card {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            height: 100%;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+            transition: 0.2s;
+
+        }
+
+
+        .module-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .module-icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 12px;
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .module-card h5 {
+
+            font-weight: 600;
+
+        }
+
+
+        .module-card p {
+
+            min-height: 48px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                min-height: auto;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+            }
+
+
+            .sidebar-menu {
+
+                display: flex;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+
+            .sidebar-menu a {
+
+                margin: 3px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- SIDEBAR -->
+<!-- ===================================================== -->
+
+<div class="sidebar">
+
+
+    <!-- Hospital Logo -->
+
+    <div class="hospital-logo">
+
+        <i class="bi bi-hospital"></i>
+
+        <h4>HMS</h4>
+
+        <small>Hospital Management</small>
+
+    </div>
+
+
+    <!-- Sidebar Menu -->
+
+    <div class="sidebar-menu">
+
+
+        <!-- Dashboard -->
+
+        <a href="{{ url_for('dashboard') }}">
+
+            <i class="bi bi-speedometer2"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <!-- Patients -->
+
+        <a href="{{ url_for('patient.patient_list') }}">
+
+            <i class="bi bi-person-vcard"></i>
+
+            <span>Patients</span>
+
+        </a>
+
+
+        <!-- Doctors -->
+
+        <a href="{{ url_for('doctor.doctor_list') }}">
+
+            <i class="bi bi-person-badge"></i>
+
+            <span>Doctors</span>
+
+        </a>
+
+
+        <!-- Appointments -->
+
+        <a href="{{ url_for('appointment.appointment_list') }}">
+
+            <i class="bi bi-calendar-check"></i>
+
+            <span>Appointments</span>
+
+        </a>
+
+
+        <!-- Medical Records -->
+
+        <a href="{{ url_for('medical_record.medical_record_list') }}">
+
+            <i class="bi bi-file-medical"></i>
+
+            <span>Medical Records</span>
+
+        </a>
+
+
+        <!-- Laboratory -->
+
+        <a href="{{ url_for('laboratory.laboratory_list') }}">
+
+            <i class="bi bi-eyedropper"></i>
+
+            <span>Laboratory</span>
+
+        </a>
+
+
+        <!-- Billing -->
+
+        <a href="{{ url_for('billing.billing_list') }}">
+
+            <i class="bi bi-receipt"></i>
+
+            <span>Billing</span>
+
+        </a>
+
+
+        <!-- Staff -->
+
+        <a href="{{ url_for('staff.staff_list') }}">
+
+            <i class="bi bi-people"></i>
+
+            <span>Staff</span>
+
+        </a>
+
+
+        <!-- Reports -->
+
+        <a href="{{ url_for('reports.reports_dashboard') }}">
+
+            <i class="bi bi-bar-chart"></i>
+
+            <span>Reports</span>
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- MAIN CONTENT -->
+<!-- ===================================================== -->
+
+<div class="main-content">
+
+
+    <!-- ================================================= -->
+    <!-- TOP BAR -->
+    <!-- ================================================= -->
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+
+
+        <div>
+
+            <h4 class="mb-1">
+
+                Admin Dashboard
+
+            </h4>
+
+
+            <div class="welcome-text">
+
+                Welcome back, {{ current_user.username }}
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="btn btn-outline-danger btn-sm"
+            >
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- HOSPITAL OVERVIEW -->
+    <!-- ================================================= -->
+
+    <h5 class="mb-3">
+
+        Hospital Overview
+
+    </h5>
+
+
+    <div class="row g-4 mb-5">
+
+
+        <!-- ================= PATIENTS ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Total Patients
+
+                </div>
+
+
+                <p class="stat-value">
+
+                    {{ total_patients }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= DOCTORS ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-person-badge"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Total Doctors
+
+                </div>
+
+
+                <p class="stat-value">
+
+                    {{ total_doctors }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= APPOINTMENTS ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Total Appointments
+
+                </div>
+
+
+                <p class="stat-value">
+
+                    {{ total_appointments }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= STAFF ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-person-workspace"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Total Staff
+
+                </div>
+
+
+                <p class="stat-value">
+
+                    {{ total_staff }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= LAB TESTS ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-eyedropper"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Laboratory Tests
+
+                </div>
+
+
+                <p class="stat-value">
+
+                    {{ total_lab_tests }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= REVENUE ================= -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-currency-rupee"></i>
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Total Revenue
+
+                </div>
+
+
+                <p class="stat-value text-success">
+
+                    ₹ {{ "%.2f"|format(total_revenue or 0) }}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- HOSPITAL ANALYTICS -->
+    <!-- ================================================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+        <h5 class="mb-0">
+
+            Hospital Analytics
+
+        </h5>
+
+
+        <span class="text-muted small">
+
+            Visual overview of hospital activities
+
+        </span>
+
+
+    </div>
+
+
+    <div class="row g-4 mb-5">
+
+
+        <!-- ================= BAR CHART ================= -->
+
+        <div class="col-lg-7">
+
+            <div class="chart-card">
+
+
+                <h5 class="mb-2">
+
+                    Hospital Statistics
+
+                </h5>
+
+
+                <p class="text-muted small mb-4">
+
+                    Current records available in the hospital system.
+
+                </p>
+
+
+                <div class="chart-container">
+
+                    <canvas id="hospitalStatsChart"></canvas>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= DOUGHNUT CHART ================= -->
+
+        <div class="col-lg-5">
+
+            <div class="chart-card">
+
+
+                <h5 class="mb-2">
+
+                    Hospital Resources
+
+                </h5>
+
+
+                <p class="text-muted small mb-4">
+
+                    Distribution of major hospital records.
+
+                </p>
+
+
+                <div class="chart-container">
+
+                    <canvas id="resourceChart"></canvas>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- HOSPITAL MODULES -->
+    <!-- ================================================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+        <h5 class="mb-0">
+
+            Hospital Modules
+
+        </h5>
+
+
+        <span class="text-muted small">
+
+            Manage hospital operations
+
+        </span>
+
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- ================= PATIENTS ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-person-vcard"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Patients
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage patient registration and patient profiles.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('patient.patient_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Patients
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= DOCTORS ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-person-badge"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Doctors
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage doctors, specialization and availability.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('doctor.doctor_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Doctors
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= APPOINTMENTS ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Appointments
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage patient appointments and schedules.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('appointment.appointment_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Appointments
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= MEDICAL RECORDS ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-file-medical"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Medical Records
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage diagnosis, treatment and medical history.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('medical_record.medical_record_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Records
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= LABORATORY ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-eyedropper"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Laboratory
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage laboratory tests, results and reports.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('laboratory.laboratory_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Laboratory
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= STAFF ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Staff
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage hospital staff, departments and employment details.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('staff.staff_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Staff
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= BILLING ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-receipt"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Billing
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    Manage consultation, laboratory and other charges.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('billing.billing_list') }}"
+                    class="btn btn-primary"
+                >
+
+                    Manage Billing
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= REPORTS ================= -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="module-card">
+
+
+                <div class="module-icon">
+
+                    <i class="bi bi-bar-chart"></i>
+
+                </div>
+
+
+                <h5>
+
+                    Reports
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    View patient, appointment, laboratory, billing and staff reports.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('reports.reports_dashboard') }}"
+                    class="btn btn-primary"
+                >
+
+                    View Reports
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- HIDDEN DASHBOARD DATA -->
+<!-- ===================================================== -->
+
+<div
+    id="dashboardData"
+    data-patients="{{ total_patients }}"
+    data-doctors="{{ total_doctors }}"
+    data-appointments="{{ total_appointments }}"
+    data-staff="{{ total_staff }}"
+    data-lab-tests="{{ total_lab_tests }}"
+    data-revenue="{{ total_revenue or 0 }}"
+    style="display: none;"
+>
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- BOOTSTRAP JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+
+<!-- ===================================================== -->
+<!-- CHART JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+    /* ================================================= */
+    /* GET DASHBOARD DATA */
+    /* ================================================= */
+
+    const dashboardData =
+        document.getElementById("dashboardData");
+
+
+    const totalPatients =
+        Number(dashboardData.dataset.patients);
+
+
+    const totalDoctors =
+        Number(dashboardData.dataset.doctors);
+
+
+    const totalAppointments =
+        Number(dashboardData.dataset.appointments);
+
+
+    const totalStaff =
+        Number(dashboardData.dataset.staff);
+
+
+    const totalLabTests =
+        Number(dashboardData.dataset.labTests);
+
+
+    const totalRevenue =
+        Number(dashboardData.dataset.revenue);
+
+
+
+    /* ================================================= */
+    /* HOSPITAL STATISTICS BAR CHART */
+    /* ================================================= */
+
+    const hospitalStats =
+        document.getElementById("hospitalStatsChart");
+
+
+    if (hospitalStats) {
+
+        new Chart(hospitalStats, {
+
+            type: "bar",
+
+            data: {
+
+                labels: [
+                    "Patients",
+                    "Doctors",
+                    "Appointments",
+                    "Staff",
+                    "Lab Tests"
+                ],
+
+                datasets: [
+
+                    {
+
+                        label: "Total Records",
+
+                        data: [
+
+                            totalPatients,
+
+                            totalDoctors,
+
+                            totalAppointments,
+
+                            totalStaff,
+
+                            totalLabTests
+
+                        ],
+
+                        backgroundColor: [
+
+                            "#0d6efd",
+
+                            "#198754",
+
+                            "#ffc107",
+
+                            "#6f42c1",
+
+                            "#fd7e14"
+
+                        ],
+
+                        borderRadius: 6
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                },
+
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+
+    /* ================================================= */
+    /* HOSPITAL RESOURCES DOUGHNUT CHART */
+    /* ================================================= */
+
+    const resourceChart =
+        document.getElementById("resourceChart");
+
+
+    if (resourceChart) {
+
+        new Chart(resourceChart, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+
+                    "Patients",
+
+                    "Doctors",
+
+                    "Staff",
+
+                    "Lab Tests"
+
+                ],
+
+
+                datasets: [
+
+                    {
+
+                        data: [
+
+                            totalPatients,
+
+                            totalDoctors,
+
+                            totalStaff,
+
+                            totalLabTests
+
+                        ],
+
+
+                        backgroundColor: [
+
+                            "#0d6efd",
+
+                            "#198754",
+
+                            "#6f42c1",
+
+                            "#fd7e14"
+
+                        ],
+
+
+                        borderWidth: 2
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
